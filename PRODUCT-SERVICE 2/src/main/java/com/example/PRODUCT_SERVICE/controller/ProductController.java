@@ -5,7 +5,10 @@ import com.example.PRODUCT_SERVICE.entity.Product;
 import com.example.PRODUCT_SERVICE.factories.ProductDtoFactory;
 import com.example.PRODUCT_SERVICE.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,15 +35,24 @@ public class ProductController {
                 .stream()
                 .map(product -> productDtoFactory.createProductDto(product))
                 .toList();
-
     }
 
     @GetMapping("/category")
-    public List<ProductDto> findProductsByCategory(@RequestParam String category) {
-        return productService.findProductByCategory(category)
-                .stream()
-                .map(product -> productDtoFactory.createProductDto(product))
-                .toList();
-
+    public List<ProductDto> findProductsByCategory(@RequestParam String category, @RequestParam(required = false) String sort) {
+        List<ProductDto> listProduct;
+        if(sort != null && !sort.isEmpty()) {
+            if(sort.equals("asc")) {
+                listProduct = productService.findProductByCategoryOrderByPriceAsc(category).stream().map(product -> productDtoFactory.createProductDto(product)).toList();
+            } else if(sort.equals("desc")) {
+                listProduct = productService.findProductByCategoryOrderByPriceDesc(category).stream().map(product -> productDtoFactory.createProductDto(product)).toList();
+            }else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid sort parameter");
+            }
+        }else {
+            listProduct = productService.findProductByCategory(category).stream().map(product -> productDtoFactory.createProductDto(product)).toList();
+        }
+        return listProduct;
     }
+
+
 }

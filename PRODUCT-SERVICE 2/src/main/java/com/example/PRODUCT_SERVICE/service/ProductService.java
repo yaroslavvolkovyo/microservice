@@ -24,4 +24,12 @@ public class ProductService {
         public List<Product> findProductByCategory(String category) {
             return productRepository.findProductsByCategory(category);
         }
+
+        public List<Product> findProductByCategoryOrderByPriceAsc(String category) {
+            return productRepository.findProductsByCategoryOrderByPriceAsc(category);
+        }
+
+        public List<Product> findProductByCategoryOrderByPriceDesc(String category) {
+            return productRepository.findProductsByCategoryOrderByPriceDesc(category);
+        }
 }
