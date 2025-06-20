@@ -1,5 +1,6 @@
 package com.example.PRODUCT_SERVICE.dto;
 
+import com.example.PRODUCT_SERVICE.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +14,6 @@ public class ProductDto {
     private String title;
     private String description;
     private double price;
+    private Category category;
     private long articleNumber;
 }

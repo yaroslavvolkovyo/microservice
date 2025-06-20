@@ -12,6 +12,7 @@ public class ProductDtoFactory {
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setArticleNumber(product.getArticleNumber());
+        productDto.setCategory(product.getCategory());
         return productDto;
     }
 
@@ -21,6 +22,7 @@ public class ProductDtoFactory {
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         product.setArticleNumber(productDto.getArticleNumber());
+        product.setCategory(productDto.getCategory());
         return product;
     }
 }
