@@ -35,8 +35,8 @@ public class ProductController {
                 .toList();
     }
 
-    @GetMapping("/category")
-    public List<ProductDto> findProductsByCategory(@RequestParam String category, @RequestParam(required = false) String sort,@RequestParam(required = false) Integer minPrice,@RequestParam(required = false) Integer maxPrice) {
+    @GetMapping("/category/{category}")
+    public List<ProductDto> findProductsByCategory(@PathVariable String category, @RequestParam(required = false) String sort,@RequestParam(required = false) Integer minPrice,@RequestParam(required = false) Integer maxPrice) {
         return productService.findProductByCategory(category,sort,minPrice,maxPrice).stream().map(productDtoFactory::createProductDto).collect(Collectors.toList());
     }
 

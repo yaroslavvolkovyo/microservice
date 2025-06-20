@@ -60,7 +60,6 @@ public class ProductService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No products found with category " + category + "for given price range");
             }
             return products;
-
         }
 
 
