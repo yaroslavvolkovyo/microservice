@@ -27,8 +27,6 @@ public class ProductController {
         return productDto;
     }
 
-
-    //todo, вынести в dto factory
     @GetMapping
     public List<ProductDto> findAllProducts() {
         return productService.findAll()
@@ -39,19 +37,7 @@ public class ProductController {
 
     @GetMapping("/category")
     public List<ProductDto> findProductsByCategory(@RequestParam String category, @RequestParam(required = false) String sort) {
-        List<ProductDto> listProduct;
-        if(sort != null && !sort.isEmpty()) {
-            if(sort.equals("asc")) {
-                listProduct = productService.findProductByCategoryOrderByPriceAsc(category).stream().map(product -> productDtoFactory.createProductDto(product)).toList();
-            } else if(sort.equals("desc")) {
-                listProduct = productService.findProductByCategoryOrderByPriceDesc(category).stream().map(product -> productDtoFactory.createProductDto(product)).toList();
-            }else{
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid sort parameter");
-            }
-        }else {
-            listProduct = productService.findProductByCategory(category).stream().map(product -> productDtoFactory.createProductDto(product)).toList();
-        }
-        return listProduct;
+        return productService.findProductByCategory(category,sort).stream().map(productDtoFactory::createProductDto).collect(Collectors.toList());
     }
 
 
